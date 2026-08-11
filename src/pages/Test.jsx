@@ -367,25 +367,25 @@ const Test = () => {
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
-            <header style={{display: 'flex', justifyContent: 'space-between', padding: '20px 40px', background: 'var(--card)', borderBottom: '2px solid var(--border)'}}>
+            <header className="test-header-bar" style={{display: 'flex', justifyContent: 'space-between', background: 'var(--card)', borderBottom: '2px solid var(--border)'}}>
                 <div style={{color: 'var(--primary)', fontWeight: 900, cursor: 'pointer', fontSize: '20px', textTransform: 'uppercase'}} onClick={handleClearAndExit}>MULTIPLE INTELLIGENCES</div>
                 <div>
-                    <select value={lang} onChange={e => setLang(e.target.value)} style={{background: 'var(--input-bg)', color: '#fff', border: '2px solid var(--border)', padding: '10px 15px', borderRadius: '8px', fontWeight: 900}}>
+                    <select className="lang-select" value={lang} onChange={e => setLang(e.target.value)}>
                         <option value="en">English</option>
                         <option value="hi">हिंदी</option>
                     </select>
                 </div>
             </header>
 
-            <main style={{flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px 20px'}}>
+            <main className="test-main">
                 {!isCompleted ? (
-                    <div style={{maxWidth: '850px', width: '100%', background: 'var(--card)', padding: '60px', borderRadius: '32px', border: '2px solid var(--border)', boxShadow: '0 20px 60px rgba(0,0,0,0.5)'}}>
-                        <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px', color: 'var(--secondary-text)', fontSize: '14px', textTransform: 'uppercase'}}>
+                    <div className="test-box">
+                        <div className="progress-header">
                             <span>{t.step} {currentIndex + 1} {t.of} {questions.length}</span>
                             <span>{Math.round(((currentIndex) / questions.length) * 100)}% {t.complete}</span>
                         </div>
-                        <div style={{width: '100%', height: '8px', background: 'var(--input-bg)', borderRadius: '4px', marginBottom: '50px', overflow: 'hidden'}}>
-                            <div style={{width: `${((currentIndex) / questions.length) * 100}%`, height: '100%', background: 'var(--primary)', transition: 'width 0.4s cubic-bezier(0.19, 1, 0.22, 1)'}} />
+                        <div className="progress-bar-bg">
+                            <div className="progress-bar-fill" style={{width: `${((currentIndex) / questions.length) * 100}%`}} />
                         </div>
                         
                         <AnimatePresence mode="wait">
@@ -396,12 +396,11 @@ const Test = () => {
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <h2 style={{fontSize: '2.5rem', marginBottom: '50px', color: 'var(--text)', lineHeight: 1.3, letterSpacing: '-1px'}}>{questions[currentIndex]}</h2>
+                                <h2 className="question-text">{questions[currentIndex]}</h2>
                                 
-                                <div style={{display: 'grid', gridTemplateColumns: '1fr', gap: '15px'}}>
+                                <div className="options-grid">
                                     {[1, 2, 3, 4, 5].map((val, idx) => (
-                                        <button key={val} 
-                                            onClick={() => handleAnswer(val)}
+                                        <button key={val} onClick={() => handleAnswer(val)}
                                             style={{
                                                 padding: '25px 30px', 
                                                 background: answers[currentIndex] === val ? 'rgba(225,29,72,0.1)' : 'var(--input-bg)', 

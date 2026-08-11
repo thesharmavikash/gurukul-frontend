@@ -39,9 +39,8 @@ const Home = () => {
             <Header />
 
             <main className="portal-container" style={{flex: 1, zIndex: 1, maxWidth: '1400px', padding: '60px 20px'}}>
-                <div style={{
+                <div className="home-main-grid" style={{
                     display: 'grid', 
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))', 
                     gap: '60px',
                     alignItems: 'stretch'
                 }}>

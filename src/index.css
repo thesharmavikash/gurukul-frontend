@@ -66,7 +66,7 @@ body {
 
 .test-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     max-width: 900px;
     margin: 0 auto;
@@ -268,3 +268,62 @@ input:focus, select:focus {
 .cat-row.top strong {
     color: var(--primary);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .portal-container {
+        padding: 40px 15px;
+    }
+    .portal-header {
+        margin-bottom: 40px;
+    }
+    .portal-header h1 {
+        font-size: 2.5rem;
+    }
+    .portal-header p {
+        font-size: 1rem;
+    }
+    .test-grid {
+        grid-template-columns: 1fr;
+    }
+    .test-card {
+        padding: 30px 20px;
+    }
+    .test-card h3 {
+        font-size: 1.5rem;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    .result-card {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+    .result-title {
+        font-size: 2rem;
+    }
+    .result-info {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    .cat-row {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    .cat-row span {
+        font-size: 14px;
+    }
+    .cat-row strong {
+        font-size: 16px;
+    }
+}
+
+.home-main-grid { grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); }
+@media (max-width: 768px) { .home-main-grid { grid-template-columns: 1fr; } }
+
+.test-box { padding: 60px; } .question-text { font-size: 2.5rem; } .test-header-bar { padding: 20px 40px; flex-direction: row; align-items: center; } .options-grid { display: grid; gap: 15px; } @media (max-width: 768px) { .test-box { padding: 30px 20px; } .question-text { font-size: 1.5rem; } .test-header-bar { padding: 15px 20px; flex-direction: column; gap: 15px; } }
+
+.lang-select { background: var(--input-bg); color: #fff; border: 2px solid var(--border); padding: 10px 15px; border-radius: 8px; font-weight: 900; } .test-main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; } .test-box { max-width: 850px; width: 100%; background: var(--card); border-radius: 32px; border: 2px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,0.5); } .progress-header { display: flex; justify-content: space-between; margin-bottom: 20px; color: var(--secondary-text); font-size: 14px; text-transform: uppercase; } .progress-bar-bg { width: 100%; height: 8px; background: var(--input-bg); border-radius: 4px; margin-bottom: 50px; overflow: hidden; } .progress-bar-fill { height: 100%; background: var(--primary); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
