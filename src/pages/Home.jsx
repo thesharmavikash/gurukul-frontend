@@ -10,7 +10,6 @@ const Home = () => {
     
     useEffect(() => {
         setTests([
-            { id: 1, name: "Quick Intelligence Mapping", question_count: 8, desc: "Fast cognitive assessment" },
             { id: 2, name: "Comprehensive Mapping", question_count: 56, desc: "Deep analytical breakdown" }
         ]);
     }, []);
