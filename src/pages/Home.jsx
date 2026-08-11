@@ -43,11 +43,11 @@ const Home = () => {
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))', 
                     gap: '60px',
-                    alignItems: 'start'
+                    alignItems: 'stretch'
                 }}>
                     
-                    {/* Left Side: Hero & Tests */}
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                    {/* Left Side: Assessment Options */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', height: '100%' }}>
                         <motion.header 
                             className="portal-header"
                             initial={{ opacity: 0, x: -30 }}
@@ -79,14 +79,14 @@ const Home = () => {
                         </motion.header>
 
                         <motion.div 
-                            style={{display: 'flex', flexDirection: 'column', gap: '25px'}}
+                            style={{display: 'flex', flexDirection: 'column', gap: '25px', flex: 1}}
                             variants={containerVariants}
                             initial="hidden"
                             animate="show"
                         >
                             {tests.map(test => (
-                                <motion.div variants={itemVariants} key={test.id} style={{display: 'block', height: '100%'}}>
-                                    <Link to={`/test/${test.id}`} className="test-card" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '30px', padding: '60px 40px', textAlign: 'center', height: '100%', minHeight: '350px'}}>
+                                <motion.div variants={itemVariants} key={test.id} style={{display: 'flex', flex: 1}}>
+                                    <Link to={`/test/${test.id}`} className="test-card" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '30px', padding: '60px 40px', textAlign: 'center', flex: 1, minHeight: '350px'}}>
                                         <div className="icon-circle" style={{margin: 0, flexShrink: 0, width: '100px', height: '100px'}}>
                                              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
