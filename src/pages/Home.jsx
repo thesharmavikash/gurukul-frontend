@@ -85,21 +85,17 @@ const Home = () => {
                             animate="show"
                         >
                             {tests.map(test => (
-                                <motion.div variants={itemVariants} key={test.id} style={{display: 'block'}}>
-                                    <Link to={`/test/${test.id}`} className="test-card" style={{display: 'flex', alignItems: 'center', gap: '30px', padding: '30px', textAlign: 'left'}}>
-                                        <div className="icon-circle" style={{margin: 0, flexShrink: 0, width: '70px', height: '70px'}}>
-                                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                                                {test.question_count <= 24 ? (
-                                                    <><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></>
-                                                ) : (
-                                                    <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></>
-                                                )}
+                                <motion.div variants={itemVariants} key={test.id} style={{display: 'block', height: '100%'}}>
+                                    <Link to={`/test/${test.id}`} className="test-card" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '30px', padding: '60px 40px', textAlign: 'center', height: '100%', minHeight: '350px'}}>
+                                        <div className="icon-circle" style={{margin: 0, flexShrink: 0, width: '100px', height: '100px'}}>
+                                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
                                              </svg>
                                         </div>
                                         <div>
-                                            <h3 style={{fontSize: '1.4rem', margin: '0 0 8px 0'}}>{test.name}</h3>
-                                            <p style={{color: 'var(--primary)', margin: '0 0 5px 0', fontSize: '0.9rem'}}>{test.question_count} SCIENTIFIC QUESTIONS</p>
-                                            <span style={{fontSize: '0.85rem', color: 'var(--secondary-text)', fontWeight: 600}}>{test.desc}</span>
+                                            <h3 style={{fontSize: '2.2rem', margin: '0 0 15px 0'}}>{test.name}</h3>
+                                            <p style={{color: 'var(--primary)', margin: '0 0 10px 0', fontSize: '1.2rem', fontWeight: 900, letterSpacing: '1px'}}>{test.question_count} SCIENTIFIC QUESTIONS</p>
+                                            <span style={{fontSize: '1.1rem', color: 'var(--secondary-text)', fontWeight: 600, lineHeight: 1.5, display: 'block'}}>{test.desc}</span>
                                         </div>
                                     </Link>
                                 </motion.div>
