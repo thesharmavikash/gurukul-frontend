@@ -6,7 +6,7 @@ const translations = {
         regTitle: "Multiple Intelligences Assessment",
         regP: "Please enter your details to begin the quick assessment.",
         regShortTitle: "Comprehensive Assessment (56 Questions)",
-        regShortP: "Please enter your details to begin the 56-question test.",
+        regShortP: "Please enter your details to begin the 80-question test.",
         labelName: "Full Name",
         placeholderName: "Enter your full name",
         labelAge: "Age",
@@ -33,7 +33,7 @@ const translations = {
         certShortSubtitle: "of Multiple Intelligences Profile (Full-Form)",
         certCertify: "This is to certify that",
         certBody: "has successfully completed the Multiple Intelligences Assessment. The result below represents the individual's unique cognitive profile across eight distinct intelligence domains.",
-        certShortBody: "has successfully completed the 56-question Multiple Intelligences Assessment.",
+        certShortBody: "has successfully completed the 80-question Multiple Intelligences Assessment.",
         certCategory: "Intelligence Category",
         certScoreMax: "Score",
         certScoreMaxShort: "Score",
@@ -51,7 +51,7 @@ const translations = {
             "I often look for weaknesses in myself that I see in others.",
             "The world of plants and animals is important to me."
         ],
-        questions56: [
+        questions80: [
             "I pride myself on having a large vocabulary.",
             "Using numbers and numerical symbols is easy for me.",
             "Music is very important to me in daily life.",
@@ -107,7 +107,31 @@ const translations = {
             "I like to move around a lot.",
             "I feel safe when I am with strangers.",
             "I enjoy being alone and thinking about my life and myself.",
-            "I look forward to visiting the zoo."
+            "I look forward to visiting the zoo.",
+            "I often write down my thoughts, feelings, or ideas in a journal.",
+            "I like to categorize and organize information to understand it better.",
+            "I can easily tell when a musical note is off-key.",
+            "I enjoy drawing, painting, or sketching in my free time.",
+            "I prefer to learn a new skill by doing it rather than reading about it.",
+            "I am often the one people come to for advice or to resolve a conflict.",
+            "I have a clear understanding of my own strengths and weaknesses.",
+            "I can easily identify different types of plants, birds, or animals.",
+            "I enjoy playing word games like Scrabble or completing crosswords.",
+            "Step-by-step instructions are a big help when I am learning something new.",
+            "I often find myself tapping my foot or fingers to a beat.",
+            "I am good at reading maps and navigating unfamiliar places.",
+            "I use a lot of hand gestures and body language when I talk.",
+            "I prefer group activities and collaborative projects over working alone.",
+            "I prefer to work independently rather than as part of a team.",
+            "Environmental issues and nature conservation are very important to me.",
+            "I can easily explain complex ideas to others in a clear way.",
+            "I find working on spreadsheets or analyzing data rewarding.",
+            "I remember song lyrics effortlessly even after hearing them just a few times.",
+            "I like to redesign or rearrange the furniture in my room.",
+            "I have good balance and physical coordination.",
+            "I can quickly sense the mood or feelings of the people around me.",
+            "I spend time reflecting on my goals and future direction.",
+            "I feel most energized and peaceful when I am outdoors in nature."
         ]
     },
     hi: {
@@ -162,7 +186,7 @@ const translations = {
             "मैं अक्सर अपने भीतर वही कमियां ढूंढता हूँ जो दूसरों में देखता हूँ।",
             "मेरे लिए पेड़-पौधों और जानवरों की दुनिया महत्वपूर्ण है।"
         ],
-        questions56: [
+        questions80: [
             "मुझे अपनी शब्दावली पर गर्व है।",
             "संख्या और प्रतीकों का उपयोग करना मेरे लिए आसान है।",
             "संगीत मेरे दैनिक जीवन का महत्वपूर्ण हिस्सा है।",
@@ -218,7 +242,31 @@ const translations = {
             "मुझे एक जगह बैठने के बजाय इधर-उधर घूमना और सक्रिय रहना पसंद है।",
             "मैं अजनबियों के बीच भी सुरक्षित और सहज महसूस करता हूँ।",
             "मुझे अकेले समय बिताना और अपने जीवन के बारे में गहराई से सोचना पसंद है।",
-            "मैं चिड़ियाघर जाने और जानवरों को देखने के लिए हमेशा उत्सुक रहता हूँ।"
+            "मैं चिड़ियाघर जाने और जानवरों को देखने के लिए हमेशा उत्सुक रहता हूँ।",
+            "मैं अक्सर अपने विचारों या भावनाओं को एक डायरी में लिखता हूँ।",
+            "मैं चीजों को बेहतर ढंग से समझने के लिए जानकारी को व्यवस्थित करना पसंद करता हूँ।",
+            "मैं आसानी से बता सकता हूँ कि कोई धुन या सुर बेसुरा है या नहीं।",
+            "मुझे अपने खाली समय में चित्र बनाना या पेंटिंग करना पसंद है।",
+            "मैं किसी नए कौशल को पढ़ने के बजाय खुद करके सीखना पसंद करता हूँ।",
+            "अक्सर लोग मुझसे सलाह लेने या विवाद सुलझाने आते हैं।",
+            "मुझे अपनी खूबियों और खामियों की स्पष्ट समझ है।",
+            "मैं विभिन्न प्रकार के पौधों, पक्षियों या जानवरों को आसानी से पहचान सकता हूँ।",
+            "मुझे स्क्रैबल जैसे शब्दों वाले गेम खेलना या क्रॉसवर्ड हल करना पसंद है।",
+            "जब मैं कुछ नया सीखता हूँ, तो स्टेप-बाय-स्टेप निर्देश मेरे लिए बहुत मददगार होते हैं।",
+            "मैं अक्सर किसी धुन पर पैर या उंगलियां थिरकाता रहता हूँ।",
+            "मैं मानचित्र (मैप) पढ़ने और अनजान जगहों पर रास्ता खोजने में माहिर हूँ।",
+            "बात करते समय मैं हाथों के इशारों और बॉडी लैंग्वेज का बहुत इस्तेमाल करता हूँ।",
+            "मुझे अकेले काम करने के बजाय ग्रुप में काम करना ज्यादा पसंद है।",
+            "मैं किसी टीम का हिस्सा बनने के बजाय स्वतंत्र रूप से काम करना पसंद करता हूँ।",
+            "पर्यावरण के मुद्दे और प्रकृति संरक्षण मेरे लिए बहुत महत्वपूर्ण हैं।",
+            "मैं जटिल विचारों को दूसरों को आसानी से समझा सकता हूँ।",
+            "मुझे स्प्रेडशीट पर काम करना या डेटा का विश्लेषण करना अच्छा लगता है।",
+            "मुझे कुछ ही बार सुनने के बाद गानों के बोल आसानी से याद हो जाते हैं।",
+            "मुझे अपने कमरे में फर्नीचर की सेटिंग बदलना या उसे नया रूप देना पसंद है।",
+            "मेरा शारीरिक संतुलन (balance) और समन्वय (coordination) बहुत अच्छा है।",
+            "मैं अपने आस-पास के लोगों के मूड या भावनाओं को जल्दी समझ लेता हूँ।",
+            "मैं अपने लक्ष्यों और भविष्य की दिशा के बारे में सोचने में समय बिताता हूँ।",
+            "जब मैं प्रकृति के बीच बाहर होता हूँ तो मुझे सबसे ज्यादा शांति और ऊर्जा मिलती है।"
         ]
     }
 };

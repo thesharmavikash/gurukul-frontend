@@ -10,7 +10,7 @@ const Home = () => {
     
     useEffect(() => {
         setTests([
-            { id: 2, name: "Comprehensive Mapping", question_count: 56, desc: "Deep analytical breakdown" }
+            { id: 2, name: "Comprehensive Mapping", question_count: 80, desc: "Deep analytical breakdown" }
         ]);
     }, []);
 

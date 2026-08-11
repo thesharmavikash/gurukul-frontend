@@ -42,9 +42,9 @@ const Test = () => {
     const [scores, setScores] = useState([]);
     const [topIndices, setTopIndices] = useState([]);
     
-    // id=1 is 8 questions, id=2 is 56 questions
-    const testType = id === '1' ? '8' : '56';
-    const questions = testType === '8' ? translations[lang].questions8 : translations[lang].questions56;
+    // id=1 is 8 questions, id=2 is 80 questions
+    const testType = id === '1' ? '8' : '80';
+    const questions = testType === '8' ? translations[lang].questions8 : translations[lang].questions80;
     const t = translations[lang];
 
     const chartRef = useRef(null);
