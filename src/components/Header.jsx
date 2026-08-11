@@ -15,17 +15,7 @@ const Header = () => {
     };
 
     return (
-        <header style={{
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            padding: '20px 40px', 
-            background: 'var(--card)', 
-            borderBottom: '2px solid var(--border)',
-            position: 'sticky',
-            top: 0,
-            zIndex: 100
-        }}>
+        <header className="main-header">
             <Link to="/" style={{display: 'flex', alignItems: 'center', gap: '15px', textDecoration: 'none'}}>
                 <div style={{
                     width: 40, height: 40, borderRadius: 10, border: '2px solid var(--primary)', 
@@ -41,7 +31,7 @@ const Header = () => {
                 </div>
             </Link>
 
-            <nav style={{display: 'flex', gap: '30px', alignItems: 'center'}}>
+            <nav className="main-nav">
                 <Link to="/" style={{
                     color: location.pathname === '/' ? 'var(--primary)' : 'var(--text)', 
                     textDecoration: 'none', 

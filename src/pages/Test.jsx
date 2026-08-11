@@ -332,7 +332,7 @@ const Test = () => {
     if (!isStarted) {
         return (
             <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'center', alignItems: 'center'}}>
-                <div style={{background: 'var(--card)', padding: '50px 40px', borderRadius: '32px', border: '2px solid var(--primary)', maxWidth: '450px', width: '90%', textAlign: 'center', boxShadow: '0 20px 60px rgba(225, 29, 72, 0.15)'}}>
+                <div className="candidate-box">
                     <h2 style={{color: 'var(--primary)', marginBottom: '30px', fontSize: '2rem', textTransform: 'uppercase'}}>CANDIDATE DETAILS</h2>
                     {localStorage.getItem(STORAGE_KEY) && (
                         <div style={{background: '#222', color: 'var(--primary-light)', padding: '10px', borderRadius: '8px', marginBottom: '20px', fontSize: '12px', fontWeight: 900}}>
@@ -401,19 +401,11 @@ const Test = () => {
                                 <div className="options-grid">
                                     {[1, 2, 3, 4, 5].map((val, idx) => (
                                         <button key={val} onClick={() => handleAnswer(val)}
+                                            className="option-button"
                                             style={{
-                                                padding: '25px 30px', 
                                                 background: answers[currentIndex] === val ? 'rgba(225,29,72,0.1)' : 'var(--input-bg)', 
                                                 border: answers[currentIndex] === val ? '2px solid var(--primary)' : '2px solid var(--border)', 
-                                                color: answers[currentIndex] === val ? 'var(--text)' : 'var(--secondary-text)', 
-                                                borderRadius: '16px', 
-                                                fontSize: '18px', 
-                                                textAlign: 'left', 
-                                                cursor: 'pointer', 
-                                                transition: '0.2s', 
-                                                display: 'flex',
-                                                gap: '20px',
-                                                alignItems: 'center'
+                                                color: answers[currentIndex] === val ? 'var(--text)' : 'var(--secondary-text)'
                                             }}
                                         >
                                             <span style={{color: answers[currentIndex] === val ? 'var(--primary)' : 'var(--text)', fontSize: '24px'}}>{val}</span> 
@@ -457,7 +449,7 @@ const Test = () => {
                             <div><span>Test Depth</span><strong>{testType} Questions</strong></div>
                         </div>
 
-                        <div style={{display: 'flex', gap: '40px', marginBottom: '40px'}}>
+                        <div className="result-flex">
                             <div style={{flex: '1', minWidth: '0'}}>
                                 <div style={{height: '350px', background: '#f8f9fa', borderRadius: '24px', padding: '20px'}}>
                                     <Radar data={chartData} options={chartOptions} ref={chartRef} />
@@ -473,7 +465,7 @@ const Test = () => {
                             </div>
                         </div>
 
-                        <div style={{background: '#0a0a0a', color: '#fff', padding: '40px', borderRadius: '24px', marginBottom: '40px'}}>
+                        <div className="profile-box">
                             <h3 style={{color: 'var(--primary)', margin: '0 0 20px 0', fontSize: '1.8rem', textTransform: 'uppercase'}}>Dominant Profile: {MIMetadata[topIndices[0]].name}</h3>
                             <p style={{fontSize: '1.2rem', lineHeight: 1.6, margin: '0 0 25px 0', color: '#ccc', fontWeight: 600}}>{MIMetadata[topIndices[0]].desc}</p>
                             <div style={{background: '#111', padding: '25px', borderRadius: '16px', borderLeft: '4px solid var(--primary)'}}>
@@ -482,7 +474,7 @@ const Test = () => {
                             </div>
                         </div>
 
-                        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '50px'}} id="action-buttons">
+                        <div className="result-action-buttons" id="action-buttons">
                             <button onClick={downloadNativePDF} style={{background: '#2563eb', color: '#fff', border: 'none', padding: '20px 40px', fontSize: '16px', fontWeight: 900, borderRadius: '40px', cursor: 'pointer', textTransform: 'uppercase'}}>Download Official PDF</button>
                             <button onClick={handleClearAndExit} style={{background: '#111', color: '#fff', border: 'none', padding: '20px 40px', fontSize: '16px', fontWeight: 900, borderRadius: '40px', cursor: 'pointer', textTransform: 'uppercase'}}>Back to Home</button>
                         </div>

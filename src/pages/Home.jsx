@@ -54,20 +54,21 @@ const Home = () => {
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             style={{textAlign: 'left', marginBottom: '50px'}}
                         >
-                            <div style={{display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px'}}>
+                            <div className="hero-header-flex">
                                 <motion.div 
+                                    className="hero-logo-box"
                                     whileHover={{ scale: 1.05, rotate: 5 }}
                                     style={{
-                                        width: 80, height: 80, borderRadius: 20, border: '4px solid var(--primary)', 
+                                        borderRadius: 20, border: '4px solid var(--primary)', 
                                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                                        background: 'rgba(17, 17, 17, 0.8)', color: 'var(--primary)', fontWeight: 900, fontSize: 28,
+                                        background: 'rgba(17, 17, 17, 0.8)', color: 'var(--primary)', fontWeight: 900,
                                         boxShadow: '0 0 30px rgba(225, 29, 72, 0.3)', backdropFilter: 'blur(10px)'
                                     }}
                                 >
                                     MI
                                 </motion.div>
                                 <div>
-                                    <h1 style={{fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', lineHeight: '1', margin: 0, letterSpacing: '-2px'}}>
+                                    <h1 className="hero-title">
                                         MULTIPLE <br/><span style={{color: 'var(--primary)'}}>INTELLIGENCES</span>
                                     </h1>
                                 </div>
@@ -85,7 +86,7 @@ const Home = () => {
                         >
                             {tests.map(test => (
                                 <motion.div variants={itemVariants} key={test.id} style={{display: 'flex', flex: 1}}>
-                                    <Link to={`/test/${test.id}`} className="test-card" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '30px', padding: '60px 40px', textAlign: 'center', flex: 1, minHeight: '350px'}}>
+                                    <Link to={`/test/${test.id}`} className="test-card" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '30px', textAlign: 'center', flex: 1, minHeight: '350px'}}>
                                         <div className="icon-circle" style={{margin: 0, flexShrink: 0, width: '100px', height: '100px'}}>
                                              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>

@@ -18,7 +18,7 @@ const AuthorCard = () => {
 
     return (
         <>
-            <div style={{background: 'var(--card)', padding: '50px', borderRadius: '32px', border: '2px solid var(--border)', boxShadow: '0 20px 60px rgba(0,0,0,0.5)', width: '100%'}}>
+            <div className="author-card">
                 <div style={{display: 'flex', alignItems: 'center', gap: '30px', marginBottom: '40px', flexWrap: 'wrap'}}>
                     <motion.img 
                         src={authorImage}
