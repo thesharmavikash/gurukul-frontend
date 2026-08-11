@@ -13,6 +13,16 @@
     --input-bg: #050505;
 }
 
+[data-theme="light"] {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --card-hover: #f1f5f9;
+    --text: #0f172a;
+    --secondary-text: #475569;
+    --border: #e2e8f0;
+    --input-bg: #f1f5f9;
+}
+
 * {
     box-sizing: border-box;
     font-family: 'Inter', system-ui, sans-serif;

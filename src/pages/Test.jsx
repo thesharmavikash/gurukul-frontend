@@ -42,6 +42,11 @@ const Test = () => {
     const [scores, setScores] = useState([]);
     const [topIndices, setTopIndices] = useState([]);
     
+    // id=1 is 8 questions, id=2 is 56 questions
+    const testType = id === '1' ? '8' : '56';
+    const questions = testType === '8' ? translations[lang].questions8 : translations[lang].questions56;
+    const t = translations[lang];
+
     const chartRef = useRef(null);
 
     // Load from localStorage on mount
@@ -73,11 +78,51 @@ const Test = () => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }, [candidateName, lang, isStarted, currentIndex, answers, isCompleted, scores, topIndices, id]);
 
+    // Keyboard Shortcuts
     useEffect(() => {
-        if (isCompleted) {
-            setTimeout(() => { downloadNativePDF(); }, 500);
-        }
-    }, [isCompleted]);
+        const handleKeyDown = (e) => {
+            if (isCompleted || !isStarted) return;
+            const key = parseInt(e.key);
+            if (key >= 1 && key <= 5) {
+                handleAnswer(key);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isStarted, isCompleted, currentIndex, answers, questions]);
+
+    // Sound Effects
+    const playSound = (type) => {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            if (type === 'tick') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.05);
+            } else if (type === 'success') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                osc.frequency.setValueAtTime(554.37, ctx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.05);
+                gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.4);
+            }
+        } catch (e) {}
+    };
 
     // Clear state
     const handleClearAndExit = () => {
@@ -85,22 +130,19 @@ const Test = () => {
         navigate('/');
     };
 
-    // id=1 is 8 questions, id=2 is 56 questions
-    const testType = id === '1' ? '8' : '56';
-    const questions = testType === '8' ? translations[lang].questions8 : translations[lang].questions56;
-    const t = translations[lang];
-
     const handleAnswer = (val) => {
+        playSound('tick');
         const newAnswers = [...answers];
         newAnswers[currentIndex] = val;
         setAnswers(newAnswers);
 
         if (currentIndex < questions.length - 1) {
-            setTimeout(() => setCurrentIndex(currentIndex + 1), 300);
+            setTimeout(() => setCurrentIndex(currentIndex + 1), 250);
         }
     };
 
     const handleFinish = () => {
+        playSound('success');
         const numCategories = 8;
         let newScores = new Array(numCategories).fill(0);
         
@@ -118,6 +160,25 @@ const Test = () => {
         setScores(newScores);
         setTopIndices([idx1, idx2]);
         setIsCompleted(true);
+
+        // Save to History
+        try {
+            const history = JSON.parse(localStorage.getItem('gurukul_history') || '[]');
+            // Avoid duplicate saves if they somehow trigger finish multiple times
+            if (!history.find(h => h.sessionKey === STORAGE_KEY && h.isCompleted)) {
+                history.unshift({
+                    id: Date.now().toString(),
+                    sessionKey: STORAGE_KEY,
+                    isCompleted: true,
+                    date: new Date().toISOString(),
+                    candidateName,
+                    testType,
+                    scores: newScores,
+                    dominantProfileIndex: idx1
+                });
+                localStorage.setItem('gurukul_history', JSON.stringify(history));
+            }
+        } catch (e) { console.error("Could not save history", e); }
     };
 
     const downloadNativePDF = () => {
@@ -130,9 +191,9 @@ const Test = () => {
         pdf.rect(0, 0, pageWidth, 15, 'F');
         
         pdf.setFont("helvetica", "bold");
-        pdf.setFontSize(24);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text("GURUKUL IAS", marginLeft, 30);
+        pdf.setFontSize(22);
+        pdf.setTextColor(225, 29, 72); // primary color
+        pdf.text("MULTIPLE INTELLIGENCES", marginLeft, 30);
         
         pdf.setFont("helvetica", "normal");
         pdf.setFontSize(14);
@@ -224,15 +285,14 @@ const Test = () => {
         pdf.text(splitCareers, marginLeft + 5, careerY + 18);
 
         // Footer
-        pdf.setFontSize(9);
+        pdf.setFontSize(8);
         pdf.setTextColor(150, 150, 150);
-        pdf.setFont("helvetica", "normal");
-        pdf.text("Generated by Gurukul IAS Cognitive Analytics System", marginLeft, 285);
+        pdf.text("Generated by MULTIPLE INTELLIGENCES By thesharmavikash", marginLeft, 285);
         
         pdf.line(pageWidth - 60, 275, pageWidth - 20, 275);
         pdf.text("Authorized Signature", pageWidth - 55, 282);
 
-        pdf.save(`Gurukul_MI_Report_${candidateName.replace(/\s+/g, '_') || 'Result'}.pdf`);
+        pdf.save(`MI_Report_${candidateName.replace(/\s+/g, '_') || 'Result'}.pdf`);
     };
 
     const chartData = {
@@ -266,8 +326,7 @@ const Test = () => {
             }
         },
         plugins: { legend: { display: false } },
-        maintainAspectRatio: false,
-        animation: false // Disable animation so we can capture base64 instantly if needed
+        maintainAspectRatio: false
     };
 
     if (!isStarted) {
@@ -309,7 +368,7 @@ const Test = () => {
     return (
         <div style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
             <header style={{display: 'flex', justifyContent: 'space-between', padding: '20px 40px', background: 'var(--card)', borderBottom: '2px solid var(--border)'}}>
-                <div style={{color: 'var(--primary)', fontWeight: 900, cursor: 'pointer', fontSize: '20px', textTransform: 'uppercase'}} onClick={handleClearAndExit}>{t.title}</div>
+                <div style={{color: 'var(--primary)', fontWeight: 900, cursor: 'pointer', fontSize: '20px', textTransform: 'uppercase'}} onClick={handleClearAndExit}>MULTIPLE INTELLIGENCES</div>
                 <div>
                     <select value={lang} onChange={e => setLang(e.target.value)} style={{background: 'var(--input-bg)', color: '#fff', border: '2px solid var(--border)', padding: '10px 15px', borderRadius: '8px', fontWeight: 900}}>
                         <option value="en">English</option>
@@ -337,7 +396,7 @@ const Test = () => {
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <h2 style={{fontSize: '2.5rem', marginBottom: '50px', color: '#fff', lineHeight: 1.3, letterSpacing: '-1px'}}>{questions[currentIndex]}</h2>
+                                <h2 style={{fontSize: '2.5rem', marginBottom: '50px', color: 'var(--text)', lineHeight: 1.3, letterSpacing: '-1px'}}>{questions[currentIndex]}</h2>
                                 
                                 <div style={{display: 'grid', gridTemplateColumns: '1fr', gap: '15px'}}>
                                     {[1, 2, 3, 4, 5].map((val, idx) => (
@@ -347,7 +406,7 @@ const Test = () => {
                                                 padding: '25px 30px', 
                                                 background: answers[currentIndex] === val ? 'rgba(225,29,72,0.1)' : 'var(--input-bg)', 
                                                 border: answers[currentIndex] === val ? '2px solid var(--primary)' : '2px solid var(--border)', 
-                                                color: answers[currentIndex] === val ? '#fff' : 'var(--secondary-text)', 
+                                                color: answers[currentIndex] === val ? 'var(--text)' : 'var(--secondary-text)', 
                                                 borderRadius: '16px', 
                                                 fontSize: '18px', 
                                                 textAlign: 'left', 
@@ -358,16 +417,20 @@ const Test = () => {
                                                 alignItems: 'center'
                                             }}
                                         >
-                                            <span style={{color: answers[currentIndex] === val ? 'var(--primary)' : '#444', fontSize: '24px'}}>{val}</span> 
-                                            <span style={{color: '#fff'}}>{t.options[idx]}</span>
+                                            <span style={{color: answers[currentIndex] === val ? 'var(--primary)' : 'var(--text)', fontSize: '24px'}}>{val}</span> 
+                                            <span style={{color: 'var(--text)'}}>{t.options[idx]}</span>
                                         </button>
                                     ))}
                                 </div>
                             </motion.div>
                         </AnimatePresence>
 
-                        <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '50px'}}>
-                            <button onClick={() => setCurrentIndex(c => Math.max(0, c - 1))} disabled={currentIndex === 0} style={{padding: '20px 40px', background: 'var(--input-bg)', border: 'none', color: '#fff', borderRadius: '16px', cursor: currentIndex === 0 ? 'not-allowed' : 'pointer', opacity: currentIndex === 0 ? 0.5 : 1, fontWeight: 900}}>
+                        <div style={{ textAlign: 'center', marginTop: '30px', color: 'var(--secondary-text)', fontSize: '13px', fontWeight: 600 }}>
+                            ⌨️ <span style={{opacity: 0.8}}>Pro tip: Press <strong style={{color: 'var(--primary)'}}>1-5</strong> on your keyboard to answer quickly</span>
+                        </div>
+
+                        <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '30px'}}>
+                            <button onClick={() => setCurrentIndex(c => Math.max(0, c - 1))} disabled={currentIndex === 0} style={{padding: '20px 40px', background: 'var(--input-bg)', border: 'none', color: 'var(--text)', borderRadius: '16px', cursor: currentIndex === 0 ? 'not-allowed' : 'pointer', opacity: currentIndex === 0 ? 0.5 : 1, fontWeight: 900}}>
                                 {t.btnPrev}
                             </button>
                             {currentIndex === questions.length - 1 ? (
@@ -383,8 +446,9 @@ const Test = () => {
                     </div>
                 ) : (
                     <div id="result-view" className="result-card">
-                        <div style={{position: 'absolute', top: '60px', right: '60px', width: '100px', height: '100px', background: '#0a0a0a', color: '#fff', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 900, border: '4px solid var(--primary)'}}>
-                            GURUKUL
+                        <div style={{position: 'absolute', top: '60px', right: '60px', width: '100px', height: '100px', background: '#0a0a0a', color: '#fff', borderRadius: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontWeight: 900, border: '4px solid var(--primary)', textAlign: 'center'}}>
+                            <span style={{color: 'var(--primary)', fontSize: '24px'}}>MI</span>
+                            <span style={{fontSize: '8px', opacity: 0.7}}>BY THESHARMAVIKASH</span>
                         </div>
                         <h1 className="result-title">{t.resultTitle}</h1>
                         <p style={{fontSize: '1.2rem', color: '#666', marginBottom: '40px', fontWeight: 600}}>{t.resultP}</p>
@@ -397,7 +461,7 @@ const Test = () => {
                         <div style={{display: 'flex', gap: '40px', marginBottom: '40px'}}>
                             <div style={{flex: '1', minWidth: '0'}}>
                                 <div style={{height: '350px', background: '#f8f9fa', borderRadius: '24px', padding: '20px'}}>
-                                    <Radar ref={chartRef} data={chartData} options={chartOptions} />
+                                    <Radar data={chartData} options={chartOptions} ref={chartRef} />
                                 </div>
                             </div>
                             <div style={{flex: '1', display: 'flex', flexDirection: 'column', gap: '10px'}}>
